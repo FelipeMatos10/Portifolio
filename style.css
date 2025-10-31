@@ -1,0 +1,791 @@
+#metaballs-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+body {
+    background-color: var(--bgBody) !important;
+}
+
+#metaballs-background canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+:root {
+    --bgMain: rgba(37, 49, 128, 1);
+    --bgContainer2: rgba(217, 217, 217, 1);
+    --color: rgba(255, 217, 0, 1);
+    --color2: rgba(255, 255, 255, 1);
+    --border: black;
+    --textoC2: rgba(37, 49, 128, 1);
+    --bgCurriculo: rgba(255, 255, 255, 1);
+    --CurriculoTxt: black;
+    --bgModo: rgba(255, 217, 0, 1);
+    --svgModo: rgba(37, 49, 128, 1);
+    --borderModo: rgba(37, 49, 128, 1);
+    --bgBarras: white;
+    --Barras: rgba(255, 217, 0, 1);
+    --borderbarras: black;
+    --tiBarras: white;
+    --tiBordaBarras: rgba(255, 217, 0, 1);
+    --ModoHover: black;
+    --ModoHoverSvg: rgba(255, 217, 0, 1);
+    --colorStrong: black;
+    --bgBody: rgba(37, 49, 128, 1);
+    --hoverColor: rgba(37, 49, 128, 1);
+    --subtitle-color: white;
+    --subtitle-shadow: 0px 0px 8px rgba(255, 217, 0, 1);
+}
+main {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    color: rgba(37, 49, 128, 1);
+    transition: background-color 0.4s ease;
+}
+
+#container2, #container5, input, #curriculo, #modo, .barra, .modal-conteudo {
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+h1, h2, p, a {
+    transition: color 0.4s ease, -webkit-text-stroke-color 0.4s ease;
+}
+
+#modo svg {
+    transition: fill 0.4s ease;
+}
+
+#html, #css, #csharp, #sql, #js {
+    transition: background-color 0.4s ease;
+}
+main {
+    background-color: transparent;
+    width: 100%;
+    height: 500vh;
+    font-family:"Krona One", sans-serif;
+}
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+#container1 h1 {
+    font-size: 80px;
+    color: var(--color2);
+    text-shadow: var(--subtitle-shadow);
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+#container1 .subtitulo {
+    color: var(--subtitle-color);
+    font-size: 24px;
+    margin-top: 20px;
+    text-align: center;
+    text-shadow: var(--subtitle-shadow);
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+#container1 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+#container2 {
+    padding-left: 7%;
+    margin-left: 5%;
+    width: 90%;
+    height: 90vh;
+    background-color: var(--bgContainer2);
+    border-radius: 25px;
+    padding-top: 1%;
+}
+#container2 h1 {
+    font-size: 70px;
+    color: var(--textoC2);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--color);
+}
+#img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--bgBody);
+    border-color: var(--color);
+    border-style: solid;
+    width: 45%;
+    height: 55vh;
+}
+#texto-sobremim {
+    -webkit-text-stroke-color: var(--color);
+    width: 45%;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+}
+#texto-sobremim p {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--textoC2);
+}
+
+#texto-sobremim p strong {
+    color: var(--colorStrong);
+    font-weight: 700;
+}
+#container-sobremim {
+    padding-top: 2%;
+    width: 80%;
+    height: 60vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#container3 h1 {
+    margin-left: 5%;
+    font-size: 80px;
+    color: var(--tiBarras);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--tiBordaBarras);
+}
+#container3 {
+    margin-top: 5%;
+}
+#container-skills {
+    margin-top: 5%;
+    margin-left: 5%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 60vh;
+    width: 95%;
+}
+.barra {
+    position: relative;
+    width: 60%;
+    height: 4vh;
+    background-color: var(--bgBarras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+}
+#container-skills h2 {
+    font-size: 50px;
+    color: var(--tiBarras);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--tiBordaBarras);
+}
+#html {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 0%;
+    height: 4vh;
+    background-color: var(--Barras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+    transition: width 1.5s ease-out;
+}
+#barra1::before {
+    content: "60%";
+    color:  var(--color2);
+    font-size: 170%;
+    position: absolute;
+    top: 0%;
+    left: 102%;
+}
+#barra2::before {
+    content: "60%";
+    color:  var(--color2);
+    font-size: 170%;
+    position: absolute;
+    top: 0%;
+    left: 102%;
+}
+#barra3::before {
+    content: "70%";
+    color:  var(--color2);
+    font-size: 170%;
+    position: absolute;
+    top: 0%;
+    left: 102%;
+}
+#barra4::before {
+    content: "40%";
+    color:  var(--color2);
+    font-size: 170%;
+    position: absolute;
+    top: 0%;
+    left: 102%;
+}
+#barra5::before {
+    content: "5%";
+    color:  var(--color2);
+    font-size: 170%;
+    position: absolute;
+    top: 0%;
+    left: 102%;
+}
+
+#css {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 0%;
+    height: 4vh;
+    background-color: var(--Barras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+    transition: width 1.5s ease-out;
+}
+#csharp {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 0%;
+    height: 4vh;
+    background-color: var(--Barras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+    transition: width 1.5s ease-out;
+}
+#sql {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 0%;
+    height: 4vh;
+    background-color: var(--Barras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+    transition: width 1.5s ease-out;
+}
+#js {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 0%;
+    height: 4vh;
+    background-color: var(--Barras);
+    border-radius: 20px;
+    border-color: var(--Barras);
+    border-style: solid;
+    transition: width 1.5s ease-out;
+}
+#container4 {
+    padding: 5%;
+}
+#projetos {
+    display: flex;
+    justify-content: center;
+    font-size: 80px;
+    color: var(--tiBarras);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--tiBordaBarras);
+}
+.card-projetos {
+    background-image: url(default-img.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    border-color: var(--color);
+    border-style: solid;
+    border-radius: 20px;
+    background-color: var(--color2);
+    width: 30%;
+    height: 50vh;
+}
+#container-projetos {
+    padding-top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hover-projeto h1{
+    font-size: 300%;
+    color: black;
+}
+.hover-projeto p {
+    color: var(--hoverColor);
+    margin-top: 5%;
+    font-size: 190%;
+}
+.hover-projeto {
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 49.5vh;
+    position: relative;
+    z-index: 99;
+    opacity: 0;
+}
+.hover-projeto:hover {
+    transition: 0.4s;
+    opacity: 1;
+}
+#container5 h1 {
+    margin-left: 5%;
+    font-size: 80px;
+    color: var(--textoC2);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--color);
+}
+#container5 {
+    text-align: center;
+    margin-left: 5%;
+    width: 90%;
+    height: 130vh;
+    background-color: var(--bgContainer2);
+    border-radius: 25px;
+    padding-top: 1%;
+}
+form {
+    padding: 5%;
+}
+input {
+    background-color: var(--color2);
+    border-radius: 20px;
+    border-color: var(--color);
+    border-style: solid;
+}
+input :focus {
+    border: solid 1px limegreen;
+}
+#input1 {
+    font-size: 40px;
+    padding-left: 2%;
+    margin-right: 1%;
+    width: 39%;
+    height: 8vh;
+}
+:placeholder-shown {
+    font-size: 40px;
+    padding-left: 2%;
+}
+#input2 {
+    background-color: var(--color2);
+    border-radius: 20px;
+    border-color: var(--color);
+    border-style: solid;
+    font-size: 40px;
+    padding-left: 2%;
+    padding-top: 2%;
+    margin-top: 3%;
+    width: 80%;
+    height: 50vh;
+}
+#separacao {
+    width: 71%;
+    height: 1vh;
+    background-color: var(--bgBody);
+    border-radius: 20px;
+    margin-left: 15%;
+}
+.contato {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 17%;
+    height: 11vh;
+    background-color: var(--color);
+    border-radius: 100%;
+    transition: background-color 0.4s ease;
+}
+.contato:hover {
+  background-color: var(--bgBody);
+}
+
+.contato:hover a {
+  background-color: var(--color);
+}
+footer {
+    margin-top: 5%;
+    margin-left: 30%;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+footer .contato a {
+  display: block;
+  text-decoration: none;
+  background-color: var(--bgBody);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  transition: background-color 0.4s ease;
+}
+
+footer .contato:nth-child(1) a {
+  mask-image: url(whatsapp.svg);
+  width: 80px;
+  height: 80px;
+}
+
+footer .contato:nth-child(2) a {
+  mask-image: url(gmail.svg);
+  width: 50px;
+  height: 50px;
+}
+
+footer .contato:nth-child(3) a {
+  mask-image: url(github-svgrepo-com.svg);
+  width: 50px;
+  height: 50px;
+}
+
+footer .contato:nth-child(4) a {
+  mask-image: url(icons8-linkedin.svg);
+  width: 50px;
+  height: 50px;
+}
+
+#modo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    position: fixed;
+    right: 3%;
+    top: 87%;
+    width: 4.5%;
+    height: 8vh;
+    border-radius: 100%;
+    background-color: var(--bgModo);
+    border: 2px solid var(--borderModo);
+    transition: background-color 0.4s ease;
+}
+#modo svg {
+    color: var(--svgModo);
+}
+
+#modo:hover {
+  background-color: var(--svgModo);
+}
+
+#modo:hover svg {
+  color: var(--bgModo);
+}
+#curriculo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    position: fixed;
+    left: 3%;
+    top: 7%;
+    width: 10%;
+    height: 5vh;
+    border-radius: 20px;
+    background-color: var(--bgCurriculo);
+    border: 2px solid var(--border);
+}
+#curriculo h1 {
+    color: var(--CurriculoTxt);
+}
+#curriculo:hover {
+  background-color: var(--CurriculoTxt);
+}
+
+#curriculo:hover h1 {
+  color: var(--bgCurriculo);
+}
+h1 {
+    font-size: large;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+#input3 {
+    font-size: 40px;
+    padding-left: 2%;
+    margin-left: 1%;
+    margin-top: 3%;
+    width: 55%;
+    height: 8vh;
+}
+#input4 {
+    font-size: 40px;
+    margin-top: -10%;
+    margin-left: 2%;
+    width: 22%;
+    height: 8vh;
+}
+#checkbox {
+    display: none;
+}
+@media (max-width: 768px) {
+    main {
+        height: auto;
+    }
+
+    #container1 h1 {
+        font-size: 40px;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    #container2 {
+        width: 95%;
+        height: auto;
+        margin-left: 2.5%;
+        padding: 20px 15px;
+    }
+
+    #container-sobremim {
+        flex-direction: column;
+        height: auto;
+        width: 100%;
+    }
+
+    #img-container {
+        width: 80%;
+        height: 50vh;
+        margin-bottom: 25px;
+    }
+
+    #container2 p {
+        width: 100%;
+        height: auto;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: justify;
+    }
+    #texto-sobremim {
+    width: 100%;
+    height: auto;
+    text-align: justify;
+    gap: 1em;
+}
+
+
+#texto-sobremim p {
+    font-size: 20px;
+    line-height: 1.3;
+}
+    #container3 h1,
+    #container-skills h2 {
+        text-align: center;
+        font-size: 32px;
+        margin-left: 0;
+    }
+    
+    #container-skills {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 15px;
+        height: auto;
+        gap: 40px;
+    }
+
+    .barra {
+        width: 100%;
+    }
+
+    #barra1::before, #barra2::before, #barra3::before, #barra4::before, #barra5::before {
+        display: none;
+    }
+
+    #container4 {
+        padding: 40px 15px;
+    }
+
+    #projetos {
+        font-size: 40px;
+    }
+    
+    #container-projetos {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .card-projetos {
+        width: 90%;
+        height: 35vh;
+    }
+    
+    #container5 {
+        width: 95%;
+        height: auto;
+        margin-left: 2.5%;
+        padding: 20px 15px;
+    }
+
+    #container5 h1 {
+        font-size: 40px;
+        margin-left: 0;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    form #input1, #input3, #input4 {
+        width: 100%;
+        margin: 0;
+    }
+    
+    #input2 {
+        width: 100%;
+        height: 25vh;
+    }
+    
+    footer {
+        width: 90%;
+        margin: 40px auto 0;
+    }
+
+    #modo {
+        width: 60px;
+        height: 60px;
+    }
+
+    #curriculo {
+        width: auto;
+        padding: 0 15px;
+        height: 45px;
+    }
+
+    #curriculo h1 {
+        font-size: 14px;
+    }
+    .hover-projeto {
+        width: 100%;
+        height: 34.5vh;
+    }
+        .modal-conteudo {
+        width: 90%;
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .modal-conteudo h1 {
+        font-size: 24px;
+    }
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.modal-conteudo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 30%;
+    height: 30vh;
+    background-color: var(--color2);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 30px;
+    border-color: var(--color);
+    border-style: solid;
+}
+.modal-conteudo h1 {
+    font-size: 30px;
+    color: var(--bgMain);
+    -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--color);
+}
+#fechar {
+    position: absolute;
+    top: 5%;
+    left: 90%;
+}
+#efeito-nome::after, #efeito-subtitulo::after {
+  content: '|';
+  margin-left: 5px;
+  font-weight: bold;
+  animation: piscar 0.7s infinite;
+  }
+  #efeito-subtitulo.cursor-parado::after {
+  animation: none;
+  content: '';
+  }
+  @keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.icon-sun {
+  display: none;
+}
+.icon-moon {
+  display: block;
+}
+
+.darkmode .icon-sun {
+  display: block;
+}
+.darkmode .icon-moon {
+  display: none;
+}
+
+@keyframes rotate-sun {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+@keyframes wobble-moon {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-20deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 4. Aplica as animações no hover */
+#modo:hover .icon-sun {
+  animation: rotate-sun 0.6s ease-in-out;
+}
+
+#modo:hover .icon-moon {
+  animation: wobble-moon 0.5s ease-in-out;
+}
+.darkmode {
+    --bgMain: rgba(37, 49, 128, 1);
+    --bgContainer2: #323438;
+    --color: rgba(255, 217, 0, 1);
+    --color2: #fff;
+    --border: white;
+    --textoC2: #fff;
+    --bgCurriculo: black;
+    --CurriculoTxt: #fff;
+    --bgModo: #323438;
+    --svgModo: rgba(255, 217, 0, 1);
+    --borderModo: rgba(255, 217, 0, 1);
+    --Barras: #323438;
+    --tiBordaBarras: rgba(255, 217, 0, 1);
+    --colorStrong: rgba(255, 217, 0, 1);
+    --bgBody: black;
+    --hoverColor: rgba(255, 217, 0, 1);
+    --subtitle-color: white;
+    --subtitle-shadow: 0px 0px 8px rgba(255, 217, 0, 1);
+}

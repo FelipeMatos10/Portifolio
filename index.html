@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portifolio Felipe</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="icon" href="Gemini_Generated_Image_yuhjcbyuhjcbyuhj-removebg-preview.png" type="image/png">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="metaballs-background"></div>
+    <main>
+    <div id="container1">
+    <h1>
+        Olá, Eu sou <span id="efeito-nome"></span>
+        <br>
+        e esse é o meu portfolio.
+    </h1>
+    <p class="subtitulo" id="efeito-subtitulo"></p>
+</div>
+<div id="container2">
+    <h1>Sobre mim</h1>
+    <div id="container-sobremim">
+        
+        <div id="img-container">
+            <img src="Ellipse 8.png" alt="Foto de Felipe Matos Carvalho"> </div>
+
+        <div id="texto-sobremim">
+            <p>Meu nome é Felipe Matos Carvalho. Sou um estudante de 17 anos do curso técnico em Informática no COTEMIG, apaixonado por tecnologia e pela arte de resolver problemas através do código.</p>
+            
+            <p>Minha jornada está focada em <strong>soluções web e desktop</strong>, com conhecimento intermediário em <strong>HTML, CSS e C#</strong>, e estou aprofundando minhas habilidades em <strong>JavaScript</strong>.</p>
+
+            <p>Minha formação técnica também me deu base em <strong>MySQL, hardware, redes e Linux</strong>.</p>
+            
+            <p>Sou extremamente motivado, proativo e aprendo rápido. Meu objetivo é encontrar um estágio para aplicar meu conhecimento, colaborar em projetos e crescer profissionalmente.</p>
+        </div>
+
+    </div>
+</div>
+        <div id="container3">
+            <h1>Minhas habilidades</h1>
+            <div id="container-skills">
+            <h2>HTML</h2><div class="barra" id="barra1"><div id="html"></div></div>
+            <h2>CSS</h2><div class="barra" id="barra2"><div id="css"></div></div>
+            <h2>C#</h2><div class="barra" id="barra3"><div id="csharp"></div></div>
+            <h2>MYSQL</h2><div class="barra" id="barra4"><div id="sql"></div></div>
+            <h2>JS</h2><div class="barra" id="barra5"><div id="js"></div></div>
+            </div>
+        </div>
+        <div id="container4">
+            <h1 id="projetos">Meus Projetos</h1>
+            <div id="container-projetos">
+                <div class="card-projetos">
+                    <div class="hover-projeto">
+                        <h1>Projeto</h1>
+                        <P>descricao do projeto</P>
+                    </div>
+                </div>
+                <div class="card-projetos">
+                    <div class="hover-projeto">
+                        <h1>Projeto</h1>
+                        <P>descricao do projeto</P>
+                    </div>
+                </div>
+                <div class="card-projetos">
+                    <div class="hover-projeto">
+                        <h1>Projeto</h1>
+                        <P>descricao do projeto</P>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="container5">
+            <h1>Entre em contato</h1>
+            <form action="https://formsubmit.co/matoscarvalhofelp@gmail.com" method="POST">
+                <input id="input1" placeholder="Nome:" type="text">
+                <input id="input1" placeholder="Email:" type="text">
+                <textarea name="" placeholder="Mensagem:" id="input2"></textarea>
+                <input id="input3" placeholder="Telefone:" itemid="telefone" type="text" oninput="mascara_telefone()" maxlength="14">
+                <input id="input4" type="submit">
+            </form>
+            <div id="separacao"></div>
+            <footer>
+                <div class="contato"><a href="https://wa.me/5531982110718"></a></div>
+                <div class="contato"><a href="mailto:matoscarvalhofelp@gmail.com"></a></div>
+                <div class="contato"><a href="https://github.com/FelipeMatos10"></a></div>
+                <div class="contato"><a href="https://www.linkedin.com/in/felp-matoscarvalho-21785a354"></a></div>
+            </footer>
+        </div>
+             <div id="modo">
+  <label for="checkbox" onclick="dark()">
+    
+    <svg class="icon-moon bi bi-moon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
+    </svg>
+
+    <svg class="icon-sun bi bi-sun" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 30 30">
+      <path d="M 14.984375 0.98632812 A 1.0001 1.0001 0 0 0 14 2 L 14 5 A 1.0001 1.0001 0 1 0 16 5 L 16 2 A 1.0001 1.0001 0 0 0 14.984375 0.98632812 z M 5.796875 4.7988281 A 1.0001 1.0001 0 0 0 5.1015625 6.515625 L 7.2226562 8.6367188 A 1.0001 1.0001 0 1 0 8.6367188 7.2226562 L 6.515625 5.1015625 A 1.0001 1.0001 0 0 0 5.796875 4.7988281 z M 24.171875 4.7988281 A 1.0001 1.0001 0 0 0 23.484375 5.1015625 L 21.363281 7.2226562 A 1.0001 1.0001 0 1 0 22.777344 8.6367188 L 24.898438 6.515625 A 1.0001 1.0001 0 0 0 24.171875 4.7988281 z M 15 8 A 7 7 0 0 0 8 15 A 7 7 0 0 0 15 22 A 7 7 0 0 0 22 15 A 7 7 0 0 0 15 8 z M 2 14 A 1.0001 1.0001 0 1 0 2 16 L 5 16 A 1.0001 1.0001 0 1 0 5 14 L 2 14 z M 25 14 A 1.0001 1.0001 0 1 0 25 16 L 28 16 A 1.0001 1.0001 0 1 0 28 14 L 25 14 z M 7.9101562 21.060547 A 1.0001 1.0001 0 0 0 7.2226562 21.363281 L 5.1015625 23.484375 A 1.0001 1.0001 0 1 0 6.515625 24.898438 L 8.6367188 22.777344 A 1.0001 1.0001 0 0 0 7.9101562 21.060547 z M 22.060547 21.060547 A 1.0001 1.0001 0 0 0 21.363281 22.777344 L 23.484375 24.898438 A 1.0001 1.0001 0 1 0 24.898438 23.484375 L 22.777344 21.363281 A 1.0001 1.0001 0 0 0 22.060547 21.060547 z M 14.984375 23.986328 A 1.0001 1.0001 0 0 0 14 25 L 14 28 A 1.0001 1.0001 0 1 0 16 28 L 16 25 A 1.0001 1.0001 0 0 0 14.984375 23.986328 z"></path>
+    </svg>
+    
+  </label>
+  <input id="checkbox" type="checkbox">
+</div>
+        <div id="curriculo"><a href="Currículo Felipe Carvalho.pdf (1).pdf_20250908_154753_0000.pdf" download="Currículo Felipe Carvalho.pdf (1).pdf_20250908_154753_0000.pdf"><h1>Meu currículo</h1></a></div>
+        <div class="modal">
+            <div class="modal-conteudo">
+                <h1>Menssagem enviada!</h1>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="metaballs.js"></script>
+</body>
+</html>
