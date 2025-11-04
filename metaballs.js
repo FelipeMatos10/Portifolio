@@ -219,7 +219,7 @@ const presets = {
     contrast: 1.6,
     fogDensity: 0.06,
     cursorGlowIntensity: 1.0,
-    cursorGlowRadius: 1.8,        
+    cursorGlowRadius: 1.8,        
     cursorGlowColor: new THREE.Color(0xFFD900)
   }
 };
@@ -306,7 +306,7 @@ function init() {
       uPixelRatio: { value: pixelRatio },
       uMousePosition: { value: new THREE.Vector2(0.5, 0.5) },
       uCursorSphere: { value: new THREE.Vector3(0, 0, 0) },
-      uCursorRadius: { value: settings.cursorRadiusMin },
+      uCursorRadius: { value: isMobile ? 0 : settings.cursorRadiusMin }, // Set to 0 on mobile
       uSphereCount: { value: settings.sphereCount },
       uFixedTopLeftRadius: { value: settings.fixedTopLeftRadius },
       uFixedBottomRightRadius: { value: settings.fixedBottomRightRadius },
@@ -327,10 +327,10 @@ function init() {
       uFogDensity: { value: settings.fogDensity },
       uAnimationSpeed: { value: settings.animationSpeed },
       uMovementScale: { value: settings.movementScale },
-      uMouseProximityEffect: { value: settings.mouseProximityEffect },
+      uMouseProximityEffect: { value: isMobile ? false : settings.mouseProximityEffect }, // Disable on mobile
       uMinMovementScale: { value: settings.minMovementScale },
       uMaxMovementScale: { value: settings.maxMovementScale },
-      uCursorGlowIntensity: { value: settings.cursorGlowIntensity },
+      uCursorGlowIntensity: { value: isMobile ? 0 : settings.cursorGlowIntensity }, // Disable on mobile
       uCursorGlowRadius: { value: settings.cursorGlowRadius },
       uCursorGlowColor: { value: settings.cursorGlowColor },
       uIsSafari: { value: isSafari ? 1.0 : 0.0 },
@@ -453,8 +453,8 @@ function init() {
           float orbitRadius = (0.3 + mod(fi, 3.0) * 0.15) * dynamicMovementScale;
           float phaseOffset = fi * PI * 0.35;
           
-          float distToCursor = length(clusterCenter - uCursorSphere);
-          float proximityScale = 1.0 + (1.0 - smoothstep(0.0, 1.0, distToCursor)) * 0.5;
+          // MODIFIED: Completely remove cursor proximity effect on mobile
+          float proximityScale = 1.0;
           orbitRadius *= proximityScale;
           
           vec3 offset;
@@ -478,25 +478,15 @@ function init() {
             );
           }
           
-          vec3 toCursor = uCursorSphere - offset;
-          float cursorDist = length(toCursor);
-          if (cursorDist < uMergeDistance && cursorDist > 0.0) {
-            float attraction = (1.0 - cursorDist / uMergeDistance) * 0.3;
-            offset += normalize(toCursor) * attraction;
-          }
-          
+          // MODIFIED: Completely remove merge attraction to cursor on mobile
           float movingSphere = sdSphere(pos - (offset + clusterCenter), radius);
           
           float blend = 0.05;
-          if (cursorDist < uMergeDistance) {
-            float influence = 1.0 - (cursorDist / uMergeDistance);
-            blend = mix(0.05, uSmoothness, influence * influence * influence);
-          }
-          
           result = smin(result, movingSphere, blend);
         }
         
-        float cursorBall = sdSphere(pos - uCursorSphere, uCursorRadius);
+        // MODIFIED: Completely hide cursor sphere on mobile
+        float cursorBall = uIsMobile > 0.5 ? MAX_DIST : sdSphere(pos - uCursorSphere, uCursorRadius);
         
         float topLeftGroup = smin(topLeft, smallTopLeft, 0.4);
         float bottomRightGroup = smin(bottomRight, smallBottomRight, 0.4);
@@ -615,15 +605,7 @@ function init() {
         
         vec3 fresnelRim = uLightColor * fresnel * 0.4;
         
-        float distToCursor = length(p - uCursorSphere);
-        if (distToCursor < uCursorRadius + 0.4) {
-          float highlight = 1.0 - smoothstep(0.0, uCursorRadius + 0.4, distToCursor);
-          specular += uLightColor * highlight * 0.2;
-          
-          float glow = exp(-distToCursor * 3.0) * 0.15;
-          ambient += uLightColor * glow * 0.5;
-        }
-        
+        // MODIFIED: Completely remove cursor proximity highlights on mobile
         vec3 color = (baseColor + ambient + diffuse + specular + fresnelRim) * ao;
         
         color = pow(color, vec3(uContrast * 0.9));
@@ -633,6 +615,10 @@ function init() {
       }
       
       float calculateCursorGlow(vec3 worldPos) {
+        // MODIFIED: Completely disable cursor glow on mobile
+        if (uIsMobile > 0.5) {
+          return 0.0;
+        }
         float dist = length(worldPos.xy - uCursorSphere.xy);
         float glow = 1.0 - smoothstep(0.0, uCursorGlowRadius, dist);
         glow = pow(glow, 2.0);
@@ -682,18 +668,21 @@ function init() {
   setupUI();
   setupEventListeners();
 
-  // Initialize cursor position
-  onPointerMove({
-    clientX: window.innerWidth / 2,
-    clientY: window.innerHeight / 2
-  });
+  // Initialize cursor position - only on desktop
+  if (!isMobile) {
+    onPointerMove({
+      clientX: window.innerWidth / 2,
+      clientY: window.innerHeight / 2
+    });
+  }
 }
 
 function setupEventListeners() {
-  window.addEventListener("mousemove", onPointerMove, { passive: true });
-  window.addEventListener("touchstart", onTouchStart, { passive: false });
-  window.addEventListener("touchmove", onTouchMove, { passive: false });
-  window.addEventListener("touchend", onTouchEnd, { passive: false });
+  // MODIFIED: Only add mouse events for desktop
+  if (!isMobile) {
+    window.addEventListener("mousemove", onPointerMove, { passive: true });
+  }
+  // Completely remove touch event listeners for mobile
   window.addEventListener("resize", onWindowResize, { passive: true });
   window.addEventListener(
     "orientationchange",
@@ -704,33 +693,11 @@ function setupEventListeners() {
   );
 }
 
-function onTouchStart(event) {
-  event.preventDefault();
-  if (event.touches.length > 0) {
-    const touch = event.touches[0];
-    onPointerMove({
-      clientX: touch.clientX,
-      clientY: touch.clientY
-    });
-  }
-}
-
-function onTouchMove(event) {
-  event.preventDefault();
-  if (event.touches.length > 0) {
-    const touch = event.touches[0];
-    onPointerMove({
-      clientX: touch.clientX,
-      clientY: touch.clientY
-    });
-  }
-}
-
-function onTouchEnd(event) {
-  event.preventDefault();
-}
-
+// MODIFIED: Remove all touch event handlers completely
 function onPointerMove(event) {
+  // This function only runs on desktop now
+  if (isMobile) return;
+
   // Use consistent coordinate system for mouse
   targetMousePosition.x = event.clientX / window.innerWidth;
   targetMousePosition.y = 1.0 - event.clientY / window.innerHeight;
@@ -828,9 +795,10 @@ function applyPreset(presetName) {
   material.uniforms.uSmoothness.value = settings.smoothness;
   material.uniforms.uContrast.value = settings.contrast;
   material.uniforms.uFogDensity.value = settings.fogDensity;
-  material.uniforms.uCursorGlowIntensity.value = settings.cursorGlowIntensity;
+  material.uniforms.uCursorGlowIntensity.value = isMobile ? 0 : settings.cursorGlowIntensity;
   material.uniforms.uCursorGlowRadius.value = settings.cursorGlowRadius;
   material.uniforms.uCursorGlowColor.value = settings.cursorGlowColor;
+  material.uniforms.uMouseProximityEffect.value = isMobile ? false : settings.mouseProximityEffect;
 }
 
 function setupUI() {
@@ -932,56 +900,59 @@ function setupUI() {
       material.uniforms.uSmoothness.value = ev.value;
     });
 
-  const mouseFolder = pane.addFolder({ title: "Mouse Interaction" });
+  // MODIFIED: Hide mouse interaction controls on mobile
+  if (!isMobile) {
+    const mouseFolder = pane.addFolder({ title: "Mouse Interaction" });
 
-  mouseFolder
-    .addBinding(settings, "mouseProximityEffect")
-    .on("change", (ev) => {
-      material.uniforms.uMouseProximityEffect.value = ev.value;
+    mouseFolder
+      .addBinding(settings, "mouseProximityEffect")
+      .on("change", (ev) => {
+        material.uniforms.uMouseProximityEffect.value = ev.value;
+      });
+
+    mouseFolder
+      .addBinding(settings, "minMovementScale", {
+        min: 0.1,
+        max: 1.0,
+        step: 0.05
+      })
+      .on("change", (ev) => {
+        material.uniforms.uMinMovementScale.value = ev.value;
+      });
+
+    mouseFolder
+      .addBinding(settings, "maxMovementScale", {
+        min: 0.5,
+        max: 2.0,
+        step: 0.05
+      })
+      .on("change", (ev) => {
+        material.uniforms.uMaxMovementScale.value = ev.value;
+      });
+
+    mouseFolder.addBinding(settings, "mouseSmoothness", {
+      min: 0.01,
+      max: 0.2,
+      step: 0.01,
+      label: "Mouse Smoothness"
     });
 
-  mouseFolder
-    .addBinding(settings, "minMovementScale", {
+    const cursorFolder = pane.addFolder({ title: "Cursor" });
+
+    cursorFolder.addBinding(settings, "cursorRadiusMin", {
+      min: 0.05,
+      max: 0.2,
+      step: 0.01,
+      label: "Min Radius"
+    });
+
+    cursorFolder.addBinding(settings, "cursorRadiusMax", {
       min: 0.1,
-      max: 1.0,
-      step: 0.05
-    })
-    .on("change", (ev) => {
-      material.uniforms.uMinMovementScale.value = ev.value;
+      max: 0.25,
+      step: 0.01,
+      label: "Max Radius"
     });
-
-  mouseFolder
-    .addBinding(settings, "maxMovementScale", {
-      min: 0.5,
-      max: 2.0,
-      step: 0.05
-    })
-    .on("change", (ev) => {
-      material.uniforms.uMaxMovementScale.value = ev.value;
-    });
-
-  mouseFolder.addBinding(settings, "mouseSmoothness", {
-    min: 0.01,
-    max: 0.2,
-    step: 0.01,
-    label: "Mouse Smoothness"
-  });
-
-  const cursorFolder = pane.addFolder({ title: "Cursor" });
-
-  cursorFolder.addBinding(settings, "cursorRadiusMin", {
-    min: 0.05,
-    max: 0.2,
-    step: 0.01,
-    label: "Min Radius"
-  });
-
-  cursorFolder.addBinding(settings, "cursorRadiusMax", {
-    min: 0.1,
-    max: 0.25,
-    step: 0.01,
-    label: "Max Radius"
-  });
+  }
 
   const animationFolder = pane.addFolder({ title: "Animation" });
 
@@ -1067,29 +1038,34 @@ function setupUI() {
       material.uniforms.uContrast.value = ev.value;
     });
 
-  const glowFolder = pane.addFolder({ title: "Cursor Glow" });
+  // MODIFIED: Hide cursor glow controls on mobile
+  if (!isMobile) {
+    const glowFolder = pane.addFolder({ title: "Cursor Glow" });
 
-  glowFolder
-    .addBinding(settings, "cursorGlowIntensity", {
-      min: 0,
-      max: 2.0,
-      step: 0.1
-    })
-    .on("change", (ev) => {
-      material.uniforms.uCursorGlowIntensity.value = ev.value;
-    });
+    glowFolder
+      .addBinding(settings, "cursorGlowIntensity", {
+        min: 0,
+        max: 2.0,
+        step: 0.1
+      })
+      .on("change", (ev) => {
+        material.uniforms.uCursorGlowIntensity.value = ev.value;
+      });
 
-  glowFolder
-    .addBinding(settings, "cursorGlowRadius", {
-      min: 0.5,
-      max: 3.0,
-      step: 0.1
-    })
-    .on("change", (ev) => {
-      material.uniforms.uCursorGlowRadius.value = ev.value;
-    });
+    glowFolder
+      .addBinding(settings, "cursorGlowRadius", {
+        min: 0.5,
+        max: 3.0,
+        step: 0.1
+      })
+      .on("change", (ev) => {
+        material.uniforms.uCursorGlowRadius.value = ev.value;
+      });
+  }
 
-  glowFolder
+  const fogFolder = pane.addFolder({ title: "Fog" });
+
+  fogFolder
     .addBinding(settings, "fogDensity", {
       min: 0,
       max: 0.5,
@@ -1145,25 +1121,34 @@ function render() {
 
   if (currentTime - lastTime >= 1000) {
     fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
-    updateStory(
-      cursorSphere3D.x,
-      cursorSphere3D.y,
-      material.uniforms.uCursorRadius.value,
-      activeMerges,
-      fps
-    );
+    // MODIFIED: Don't update story with cursor position on mobile
+    if (!isMobile) {
+      updateStory(
+        cursorSphere3D.x,
+        cursorSphere3D.y,
+        material.uniforms.uCursorRadius.value,
+        activeMerges,
+        fps
+      );
+    } else {
+      // On mobile, show fixed values or hide the story
+      updateStory(0, 0, 0, 0, fps);
+    }
     frameCount = 0;
     lastTime = currentTime;
   }
 
-  // Smooth mouse movement
-  mousePosition.x +=
-    (targetMousePosition.x - mousePosition.x) * settings.mouseSmoothness;
-  mousePosition.y +=
-    (targetMousePosition.y - mousePosition.y) * settings.mouseSmoothness;
+  // Smooth mouse movement - only on desktop
+  if (!isMobile) {
+    mousePosition.x +=
+      (targetMousePosition.x - mousePosition.x) * settings.mouseSmoothness;
+    mousePosition.y +=
+      (targetMousePosition.y - mousePosition.y) * settings.mouseSmoothness;
+
+    material.uniforms.uMousePosition.value = mousePosition;
+  }
 
   material.uniforms.uTime.value = clock.getElapsedTime();
-  material.uniforms.uMousePosition.value = mousePosition;
 
   // Periodic cleanup for better memory management
   if (performance.now() % 5000 < 16) {
