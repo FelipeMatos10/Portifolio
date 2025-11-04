@@ -674,15 +674,21 @@ function init() {
       clientX: window.innerWidth / 2,
       clientY: window.innerHeight / 2
     });
+  } else {
+    // On mobile, set cursor to fixed position and zero radius
+    cursorSphere3D.set(0, 0, 0);
+    material.uniforms.uCursorSphere.value.copy(cursorSphere3D);
+    material.uniforms.uCursorRadius.value = 0;
   }
 }
 
 function setupEventListeners() {
-  // MODIFIED: Only add mouse events for desktop
+  // MODIFIED: Completely remove ALL touch and mouse events on mobile
   if (!isMobile) {
     window.addEventListener("mousemove", onPointerMove, { passive: true });
   }
-  // Completely remove touch event listeners for mobile
+  // NO touch events at all on mobile
+  
   window.addEventListener("resize", onWindowResize, { passive: true });
   window.addEventListener(
     "orientationchange",
@@ -693,7 +699,8 @@ function setupEventListeners() {
   );
 }
 
-// MODIFIED: Remove all touch event handlers completely
+// REMOVED: All touch event handlers (onTouchStart, onTouchMove, onTouchEnd)
+
 function onPointerMove(event) {
   // This function only runs on desktop now
   if (isMobile) return;
@@ -1131,7 +1138,7 @@ function render() {
         fps
       );
     } else {
-      // On mobile, show fixed values or hide the story
+      // On mobile, show fixed values
       updateStory(0, 0, 0, 0, fps);
     }
     frameCount = 0;
